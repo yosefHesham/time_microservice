@@ -36,7 +36,7 @@ app.get("/api/:date", async (req, res) => {
       res.json({ unix: unix, utc: new Date(unix).toUTCString() });
     } else {
       res.json({
-        unix: req.params.date,
+        unix: parseInt(req.params.date),
         utc: new Date(parseInt(req.params.date)).toUTCString(),
       });
     }
