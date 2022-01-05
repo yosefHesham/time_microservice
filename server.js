@@ -39,7 +39,7 @@ app.get("/api/:date", async (req, res) => {
     });
   }
   ///  if NaN so its invalid date or its already in milliseconds, so we won`t convert it, if not we will parse to to milliseconds
-  let unix = isNan(Date.parse(req.params.date))
+  let unix = isNaN(Date.parse(req.params.date))
     ? parseInt(req.params.date)
     : Date.parse(req.params.date);
   console.log(req.params.date);
