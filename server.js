@@ -24,7 +24,19 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", async (req, res) => {
-  res.json(Date.parse(req.params.date));
+  if (!req.params.date) {
+    res.json({ unix: new Date.now().getTime(), utc: new Date.now() });
+  }
+  try {
+    if (req.params.date.includes("-")) {
+      const unix = Date.parse(req.params.date);
+      res.json({ unix: unix, utc: new Date(unix) });
+    } else {
+      res.json({ unix: req.params.date, utc: new Date(req.params.date) });
+    }
+  } catch (e) {
+    res.json({ error: "Invalid date" });
+  }
 });
 
 // listen for requests :)
