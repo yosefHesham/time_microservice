@@ -44,7 +44,7 @@ app.get("/api/:date", async (req, res) => {
       utc: new Date(parseInt(unix)).toUTCString(),
     });
   } else {
-    return { error: "Invalid Date" };
+    res.json({ error: "Invalid Date" });
   }
 });
 
