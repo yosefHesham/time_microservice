@@ -32,7 +32,7 @@ app.get("/api/:date", async (req, res) => {
       const unix = Date.parse(req.params.date);
       res.json({ unix: unix, utc: new Date(unix) });
     } else {
-      res.json({ unix: req.params.date, utc: new Date(req.params.date) });
+      res.json({ unix: req.params.date, utc: Date.parse(req.params.date) });
     }
   } catch (e) {
     res.json({ error: "Invalid date" });
