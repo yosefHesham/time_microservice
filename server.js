@@ -26,7 +26,7 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date", async (req, res) => {
   if (req.params.date === undefined) {
     res.json({
-      unix: new Date.now().getTime(),
+      unix: Date.parse(new Date.now().toUTCString()),
       utc: new Date.now().toUTCString(),
     });
   }
