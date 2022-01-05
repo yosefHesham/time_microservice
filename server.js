@@ -41,7 +41,7 @@ app.get("/api/:date", async (req, res) => {
   ///  if NaN so its invalid date or its already in milliseconds, so we won`t convert it, if not we will parse to to milliseconds
   let unix =
     Date.parse(req.params.date) == NaN
-      ? req.params.date
+      ? parseInt(req.params.date)
       : Date.parse(req.params.date);
   // means the input is a date
   if (!new Date(unix).toUTCString().includes("Invalid")) {
