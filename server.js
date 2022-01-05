@@ -38,6 +38,7 @@ app.get("/api/:date", async (req, res) => {
       });
     }
   } catch (e) {
+    console.log(e);
     res.json({ error: "Invalid date" });
   }
 });
