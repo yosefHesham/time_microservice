@@ -30,19 +30,19 @@ app.get("/api/:date", async (req, res) => {
       utc: new Date.now().toUTCString(),
     });
   }
-  try {
-    if (req.params.date.includes("-")) {
+
+  if (req.params.date.includes("-")) {
+    try {
       const unix = Date.parse(req.params.date);
       res.json({ unix: unix, utc: new Date(unix).toUTCString() });
-    } else {
-      res.json({
-        unix: parseInt(req.params.date),
-        utc: new Date(parseInt(req.params.date)).toUTCString(),
-      });
+    } catch (e) {
+      res.json({ error: "Invalid date" });
     }
-  } catch (e) {
-    console.log(e);
-    res.json({ error: "Invalid date" });
+  } else {
+    res.json({
+      unix: parseInt(req.params.date),
+      utc: new Date(parseInt(req.params.date)).toUTCString(),
+    });
   }
 });
 
