@@ -23,13 +23,13 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-app.get("/api", (req, res) => {
-  res.json({
-    unix: new Date.now().getTime(),
-    utc: new Date.now().toUTCString(),
-  });
-});
 app.get("/api/:date", async (req, res) => {
+  if (!req.params.date) {
+    res.json({
+      unix: new Date.now().getTime(),
+      utc: new Date.now().toUTCString(),
+    });
+  }
   try {
     if (req.params.date.includes("-")) {
       const unix = Date.parse(req.params.date);
@@ -37,7 +37,7 @@ app.get("/api/:date", async (req, res) => {
     } else {
       res.json({
         unix: req.params.date,
-        utc: new Date(parseInt(req.params.date).toUTCString()),
+        utc: new Date(parseInt(req.params.date)).toUTCString(),
       });
     }
   } catch (e) {
