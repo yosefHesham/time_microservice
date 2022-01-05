@@ -30,11 +30,11 @@ app.get("/api/:date", async (req, res) => {
   try {
     if (req.params.date.includes("-")) {
       const unix = Date.parse(req.params.date);
-      res.json({ unix: unix, utc: new Date(unix) });
+      res.json({ unix: unix, utc: new Date(unix).toUTCString() });
     } else {
       res.json({
         unix: req.params.date,
-        utc: new Date(parseInt(req.params.date)),
+        utc: new Date(parseInt(req.params.date).toUTCString()),
       });
     }
   } catch (e) {
