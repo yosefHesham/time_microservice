@@ -43,6 +43,7 @@ app.get("/api/:date", async (req, res) => {
     Date.parse(req.params.date) === NaN
       ? parseInt(req.params.date)
       : Date.parse(req.params.date);
+  console.log(req.params.date);
   console.log("xxx" + unix);
   // means the input is a date
   if (!new Date(unix).toUTCString().includes("Invalid")) {
