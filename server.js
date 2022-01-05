@@ -31,21 +31,20 @@ app.get("/api/:date", async (req, res) => {
     });
   }
 
-  if (isNaN(parseInt(req.params.date))) {
-    const unix = Date.parse(req.params.date);
-    console.log(unix);
-    if (new Date(unix).toUTCString().includes("Invalid")) {
-      return res.json({ error: "Invalid date" });
-    }
-    res.json({
-      unix: new Date(unix).getMilliseconds(),
-      utc: new Date(unix).toUTCString(),
-    });
-  } else {
+  let unix = Date.parse(req.params.date);
+
+  if (!new Date(unix).toUTCString().includes("Invalid")) {
+    return res.json({ unix: unix, utc: new Date(unix).toUTCString() });
+  } else if (
+    !new Date(parseInt(req.params.date)).toUTCString().includes("Invalid")
+  ) {
+    unix = parseInt(req.params.date);
     res.json({
       unix: parseInt(req.params.date),
-      utc: new Date(parseInt(req.params.date)).toUTCString(),
+      utc: new Date(parseInt(unix)).toUTCString(),
     });
+  } else {
+    return { error: "Invalid Date" };
   }
 });
 
