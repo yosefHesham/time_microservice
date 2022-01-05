@@ -38,20 +38,23 @@ app.get("/api/:date", async (req, res) => {
       utc: new Date.now().toUTCString(),
     });
   }
-
-  let unix = Date.parse(req.params.date);
-
+  ///  if NaN so its invalid date or its already in milliseconds, so we won`t convert it, if not we will parse to to milliseconds
+  let unix =
+    Date.parse(req.params.date) == NaN
+      ? req.params.date
+      : Date.parse(req.params.date);
+  // means the input is a date
   if (!new Date(unix).toUTCString().includes("Invalid")) {
     return res.json({ unix: unix, utc: new Date(unix).toUTCString() });
-  } else if (
-    !new Date(parseInt(req.params.date)).toUTCString().includes("Invalid")
-  ) {
-    unix = parseInt(req.params.date);
-    res.json({
-      unix: parseInt(req.params.date),
-      utc: new Date(parseInt(unix)).toUTCString(),
-    });
-  } else {
+  }
+  // means its already milliseconds
+  // else if (!new Date(unix).toUTCString().includes("Invalid")) {
+  //   res.json({
+  //     unix: unix,
+  //     utc: new Date(unix).toUTCString(),
+  //   });
+  // }
+  else {
     res.json({ error: "Invalid Date" });
   }
 });
